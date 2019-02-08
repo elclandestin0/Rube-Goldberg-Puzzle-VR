@@ -1,0 +1,16 @@
+{
+  "source": "Unity",
+  "applications": [
+    {
+      "app_key": "application.generated.unity.vrnd_c8a_projectassetpack.exe",
+      "launch_type": "url",
+      "url": "steam://launch/",
+      "action_manifest_path": "C:\\Users\\Memo\\Desktop\\VR\\Rube-Goldberg-Puzzle-VR\\actions.json",
+      "strings": {
+        "en_us": {
+          "name": "VRND_C8A_ProjectAssetPack [Testing]"
+        }
+      }
+    }
+  ]
+}
