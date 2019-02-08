@@ -1,2 +1,6 @@
-# Rube-Goldberg-Puzzle-VR
-A Rube Goldberg Puzzle VR game, made with Steam VR
+# Rube Goldberg Starter Project
+
+This project is part of [Udacity](https://www.udacity.com "Udacity - Be in demand")'s [VR Developer Nanodegree](https://www.udacity.com/course/vr-developer-nanodegree--nd017).
+
+## Versions
+- Unity 2017.4.15
