@@ -10,11 +10,12 @@ public class BallReset : MonoBehaviour {
     // Boolean to check if ball has collided with floor
     public bool activatedLerp = false;
 
+
     // Time to be added with deltaTime
     float time = 0.0f;
 
     // Time it takes to move
-    public float timeToMove = 2.0f;
+    public float timeToMove = 3.0f;
 
 
 
@@ -46,9 +47,11 @@ public class BallReset : MonoBehaviour {
         gameObject.GetComponent<Rigidbody>().isKinematic = true;
         Debug.Log("Resetting the ball ...");
         time += Time.deltaTime;
-        transform.position = Vector3.Lerp(transform.position, Destination.transform.position, time / timeToMove);
+        Debug.Log("time: " + time);
+        float lerpTime = time / timeToMove;
+        transform.position = Vector3.Lerp(transform.position, Destination.transform.position, lerpTime);
 
-        if (transform.position == Destination.transform.position)
+        if (lerpTime >= 1.0f)
         {
             Debug.Log("Disabling lerp");
             activatedLerp = false;
