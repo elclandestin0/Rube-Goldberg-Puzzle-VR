@@ -27,7 +27,6 @@ public class BallReset : MonoBehaviour {
     void Update() {
         if (activatedLerp == true)
         {
-            Debug.Log("Collided with floor: " + activatedLerp);
             ResetBall();
         }
     }
@@ -37,7 +36,6 @@ public class BallReset : MonoBehaviour {
         
         if (col.gameObject.name == "Floor")
         {
-            Debug.Log("Activated Lerp!");
             activatedLerp = true;
         }
     }
@@ -45,15 +43,12 @@ public class BallReset : MonoBehaviour {
     void ResetBall()
     {
         gameObject.GetComponent<Rigidbody>().isKinematic = true;
-        Debug.Log("Resetting the ball ...");
         time += Time.deltaTime;
-        Debug.Log("time: " + time);
         float lerpTime = time / timeToMove;
         transform.position = Vector3.Lerp(transform.position, Destination.transform.position, lerpTime);
 
         if (lerpTime >= 1.0f)
         {
-            Debug.Log("Disabling lerp");
             activatedLerp = false;
             time = 0.0f;
             gameObject.GetComponent<Rigidbody>().isKinematic = false;
