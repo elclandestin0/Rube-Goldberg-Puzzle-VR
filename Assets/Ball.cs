@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BallReset : MonoBehaviour {
+public class Ball : MonoBehaviour {
 
     // Empty GameObject for ball to reset to if it hits the floor 
     public GameObject Destination;
@@ -37,6 +37,12 @@ public class BallReset : MonoBehaviour {
         if (col.gameObject.name == "Floor")
         {
             activatedLerp = true;
+        }
+
+        if (col.gameObject.name == "Collectible_Star")
+        {
+            Debug.Log("Collided with star!");
+            Destroy(col.gameObject);
         }
     }
 
