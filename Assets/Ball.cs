@@ -2,7 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ball : MonoBehaviour {
+public class Ball : MonoBehaviour
+{
+    // Exit points for teleport blocks
+    public GameObject ExitPointOne;
+    public GameObject ExitPointTwo;
+
+    // Force of ball when teleporting
+    public float force  = 5.0f;
 
     // Empty GameObject for ball to reset to if it hits the floor 
     public GameObject Destination;
@@ -20,11 +27,15 @@ public class Ball : MonoBehaviour {
 
 
     // Use this for initialization
-    void Start() {
+    void Start()
+    {
+
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
+
         if (activatedLerp == true)
         {
             ResetBall();
@@ -33,7 +44,7 @@ public class Ball : MonoBehaviour {
 
     void OnCollisionEnter(Collision col)
     {
-        
+
         if (col.gameObject.name == "Floor")
         {
             activatedLerp = true;
@@ -41,8 +52,23 @@ public class Ball : MonoBehaviour {
 
         if (col.gameObject.name == "Collectible_Star")
         {
-            Debug.Log("Collided with star!");
             Destroy(col.gameObject);
+        }
+
+        if (col.gameObject.name == "Teleport_Target_One")
+        {
+            transform.position = ExitPointTwo.transform.position;
+            float ballVelocity = gameObject.GetComponent<Rigidbody>().velocity.magnitude;
+            float finalVelocity = ballVelocity * force; 
+            gameObject.GetComponent<Rigidbody>().AddForce(ExitPointTwo.transform.forward * finalVelocity, ForceMode.Impulse);
+        }
+
+        if (col.gameObject.name == "Teleport_Target_Two")
+        {
+            transform.position = ExitPointOne.transform.position;
+            float ballVelocity = gameObject.GetComponent<Rigidbody>().velocity.magnitude;
+            float finalVelocity = ballVelocity * force; 
+            gameObject.GetComponent<Rigidbody>().AddForce(ExitPointOne.transform.forward * finalVelocity, ForceMode.Impulse);
         }
     }
 
@@ -60,5 +86,10 @@ public class Ball : MonoBehaviour {
             gameObject.GetComponent<Rigidbody>().isKinematic = false;
         }
     }
+
+    // Vector3 GetVelocity() {
+    //     Vector3 velocity = gameObject.GetComponent<Valve.VR.InteractionSystem.VelocityEstimator>().GetVelocityEstimate();
+    //     return velocity;
+    // }
 
 }

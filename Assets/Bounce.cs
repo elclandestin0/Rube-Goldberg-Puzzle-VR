@@ -11,7 +11,9 @@ public class Bounce : MonoBehaviour
     public bool bounce = false;
 
     // Ball to add force to when bouncing
-    public Transform ball;
+    public GameObject ball;
+
+
 
     // Use this for initialization
     void Start()
