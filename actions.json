@@ -41,6 +41,14 @@
       "requirement": "optional"
     },
     {
+      "name": "/actions/default/in/ItemsScroll",
+      "type": "vector2"
+    },
+    {
+      "name": "/actions/default/in/ItemSpawn",
+      "type": "boolean"
+    },
+    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     },

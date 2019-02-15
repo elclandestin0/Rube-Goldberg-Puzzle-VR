@@ -89,6 +89,22 @@ namespace Valve.VR
             }
         }
         
+        public virtual SteamVR_Action_Vector2 ItemsScroll
+        {
+            get
+            {
+                return SteamVR_Actions.default_ItemsScroll;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean ItemSpawn
+        {
+            get
+            {
+                return SteamVR_Actions.default_ItemSpawn;
+            }
+        }
+        
         public virtual SteamVR_Action_Vibration Haptic
         {
             get
