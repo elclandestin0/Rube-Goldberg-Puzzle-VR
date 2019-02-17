@@ -239,11 +239,7 @@
                "path" : "/user/hand/right/input/grip"
             },
             {
-               "inputs" : {
-                  "position" : {
-                     "output" : "/actions/default/in/itemsscroll"
-                  }
-               },
+               "inputs" : {},
                "mode" : "joystick",
                "path" : "/user/hand/left/input/joystick"
             },
@@ -273,6 +269,20 @@
                },
                "mode" : "button",
                "path" : "/user/hand/right/input/grip"
+            },
+            {
+               "inputs" : {},
+               "mode" : "joystick",
+               "path" : "/user/hand/left/input/joystick"
+            },
+            {
+               "inputs" : {
+                  "touch" : {
+                     "output" : "/actions/default/in/itemsshow"
+                  }
+               },
+               "mode" : "joystick",
+               "path" : "/user/hand/right/input/joystick"
             }
          ]
       },
