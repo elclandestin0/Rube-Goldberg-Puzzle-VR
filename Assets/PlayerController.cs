@@ -80,7 +80,6 @@ public class PlayerController : MonoBehaviour
 
     public void SpawnItem()
     {
-        Debug.Log("Spawning Item");
         Instantiate(objectPrefabList[currentObject],
              objectList[currentObject].transform.position,
              objectList[currentObject].transform.rotation
@@ -113,6 +112,7 @@ public class PlayerController : MonoBehaviour
             if (rightGrip)
             {
                 SpawnItem();
+                
             }
         }
         else if (!rightTouch)

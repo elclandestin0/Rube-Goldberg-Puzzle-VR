@@ -8,8 +8,10 @@ public class Ball : MonoBehaviour
     public GameObject ExitPointOne;
     public GameObject ExitPointTwo;
 
+    public GameObject playerController;
+
     // Force of ball when teleporting
-    public float force  = 5.0f;
+    public float force = 5.0f;
 
     // Empty GameObject for ball to reset to if it hits the floor 
     public GameObject Destination;
@@ -35,11 +37,12 @@ public class Ball : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (activatedLerp == true)
         {
             ResetBall();
         }
+        ExitPointOne = GameObject.FindGameObjectWithTag("ExitPointOne");
+        ExitPointTwo = GameObject.FindGameObjectWithTag("ExitPointTwo");
     }
 
     void OnCollisionEnter(Collision col)
@@ -50,16 +53,11 @@ public class Ball : MonoBehaviour
             activatedLerp = true;
         }
 
-        if (col.gameObject.name == "Collectible_Star")
-        {
-            Destroy(col.gameObject);
-        }
-
         if (col.gameObject.name == "Teleport_Target_One")
         {
             transform.position = ExitPointTwo.transform.position;
             float ballVelocity = gameObject.GetComponent<Rigidbody>().velocity.magnitude;
-            float finalVelocity = ballVelocity * force; 
+            float finalVelocity = ballVelocity * force;
             gameObject.GetComponent<Rigidbody>().AddForce(ExitPointTwo.transform.forward * finalVelocity, ForceMode.Impulse);
         }
 
@@ -67,8 +65,16 @@ public class Ball : MonoBehaviour
         {
             transform.position = ExitPointOne.transform.position;
             float ballVelocity = gameObject.GetComponent<Rigidbody>().velocity.magnitude;
-            float finalVelocity = ballVelocity * force; 
+            float finalVelocity = ballVelocity * force;
             gameObject.GetComponent<Rigidbody>().AddForce(ExitPointOne.transform.forward * finalVelocity, ForceMode.Impulse);
+        }
+    }
+
+    void OnTriggerEnter(Collider col)
+    {
+        if (col.gameObject.tag == "Star")
+        {
+            col.gameObject.SetActive(false);
         }
     }
 
@@ -86,10 +92,5 @@ public class Ball : MonoBehaviour
             gameObject.GetComponent<Rigidbody>().isKinematic = false;
         }
     }
-
-    // Vector3 GetVelocity() {
-    //     Vector3 velocity = gameObject.GetComponent<Valve.VR.InteractionSystem.VelocityEstimator>().GetVelocityEstimate();
-    //     return velocity;
-    // }
 
 }
