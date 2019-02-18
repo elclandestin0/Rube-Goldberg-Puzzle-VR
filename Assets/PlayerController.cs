@@ -26,6 +26,14 @@ public class PlayerController : MonoBehaviour
     public List<GameObject> objectPrefabList;
     public float sensitivity = 0.9f;
 
+    /*
+        The following two boolean variables are for the Ball.cs script. If one of them is instantiated, 
+        then the ball will add their respective ExitPoint as part of their reference. This will make 
+        looking for the exitPoints less expensive as opposed to searching for it in every frame.  
+     */
+    public bool instantiatedTeleportOne = false; 
+    public bool instantiatedTeleportTwo = false;
+
     // Use this for initialization
     void Start()
     {
@@ -84,6 +92,16 @@ public class PlayerController : MonoBehaviour
              objectList[currentObject].transform.position,
              objectList[currentObject].transform.rotation
              );
+        if (objectPrefabList[currentObject].tag == "Teleport_Target_One")
+        {
+            instantiatedTeleportOne = true;
+        }
+
+        if (objectPrefabList[currentObject].tag == "Teleport_Target_Two")
+        {
+            instantiatedTeleportTwo = true;
+        }
+        
     }
 
     private void FixedUpdate()
@@ -112,14 +130,11 @@ public class PlayerController : MonoBehaviour
             if (rightGrip)
             {
                 SpawnItem();
-                
             }
         }
         else if (!rightTouch)
         {
             DeactivateItem();
         }
-
-
     }
 }

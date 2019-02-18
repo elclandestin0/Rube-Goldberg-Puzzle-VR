@@ -14,8 +14,11 @@ public class Ball : MonoBehaviour
     public GameObject ExitPointOne;
     public GameObject ExitPointTwo;
 
-    // Gameobject reference to the goal, in order to use the script's functions
-    public GameObject Goal;
+    // GameObject reference to the GameController, in order to use the script's functions
+    public GameObject GameController;
+
+    // GameObject referencve to the PlayerController
+    public GameObject PlayerController;
 
     // Force of ball when teleporting
     public float force = 5.0f;
@@ -55,12 +58,24 @@ public class Ball : MonoBehaviour
         {
             ResetBall();
         }
-        ExitPointOne = GameObject.FindGameObjectWithTag("ExitPointOne");
-        ExitPointTwo = GameObject.FindGameObjectWithTag("ExitPointTwo");
+
+        if (PlayerController.GetComponent<PlayerController>().instantiatedTeleportOne)
+        {
+            Debug.Log("First teleporter instantiated!");
+            ExitPointOne = GameObject.FindGameObjectWithTag("ExitPointOne");
+            PlayerController.GetComponent<PlayerController>().instantiatedTeleportOne = false;
+        }
+
+        if (PlayerController.GetComponent<PlayerController>().instantiatedTeleportTwo)
+        {
+            Debug.Log("Second teleporter instantiated!");
+            ExitPointTwo = GameObject.FindGameObjectWithTag("ExitPointTwo");
+            PlayerController.GetComponent<PlayerController>().instantiatedTeleportTwo = false;
+        }
 
         if (starsCollected == collectibles.Count)
         {
-            Goal.GetComponent<Goal>().starsHit = true;
+            GameController.GetComponent<GameController>().starsHit = true;
             starsCollected = 0;
         }
     }
@@ -73,20 +88,19 @@ public class Ball : MonoBehaviour
             activatedLerp = true;
         }
 
-        if (col.gameObject.name == "Teleport_Target_One")
+        if (col.gameObject.tag == "Teleport_Target_One")
         {
-            transform.position = ExitPointTwo.transform.position;
-            float ballVelocity = gameObject.GetComponent<Rigidbody>().velocity.magnitude;
-            float finalVelocity = ballVelocity * force;
-            gameObject.GetComponent<Rigidbody>().AddForce(ExitPointTwo.transform.forward * finalVelocity, ForceMode.Impulse);
+            Teleport(ExitPointTwo);
         }
 
-        if (col.gameObject.name == "Teleport_Target_Two")
+        if (col.gameObject.tag == "Teleport_Target_Two")
         {
-            transform.position = ExitPointOne.transform.position;
-            float ballVelocity = gameObject.GetComponent<Rigidbody>().velocity.magnitude;
-            float finalVelocity = ballVelocity * force;
-            gameObject.GetComponent<Rigidbody>().AddForce(ExitPointOne.transform.forward * finalVelocity, ForceMode.Impulse);
+            Teleport(ExitPointOne);
+        }
+
+        if (col.gameObject.tag == "Goal")
+        {
+            GameController.GetComponent<GameController>().goalHit = true;
         }
     }
 
@@ -112,8 +126,8 @@ public class Ball : MonoBehaviour
         // reset starsCollected to zero
         starsCollected = 0;
 
-        Goal.GetComponent<Goal>().starsHit = false;
-        Goal.GetComponent<Goal>().goalHit = false;
+        GameController.GetComponent<GameController>().starsHit = false;
+        GameController.GetComponent<GameController>().goalHit = false;
 
 
         if (lerpTime >= 1.0f)
@@ -129,5 +143,13 @@ public class Ball : MonoBehaviour
         {
             collectible.SetActive(true);
         }
+    }
+
+    public void Teleport(GameObject ExitPoint)
+    {
+        transform.position = ExitPoint.transform.position;
+        float ballVelocity = gameObject.GetComponent<Rigidbody>().velocity.magnitude;
+        float finalVelocity = ballVelocity * force;
+        gameObject.GetComponent<Rigidbody>().AddForce(ExitPoint.transform.forward * finalVelocity, ForceMode.Impulse);
     }
 }

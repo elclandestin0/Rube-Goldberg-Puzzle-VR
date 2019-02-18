@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using Valve;
 using Valve.VR;
-public class Goal : MonoBehaviour
+
+public class GameController : MonoBehaviour
 {
 
     public SteamVR_LoadLevel loadLevel;
 
-
     public bool goalHit = false;
     public bool starsHit = false;
 
+    // Use this for initialization
     void Start()
     {
 
@@ -24,15 +25,8 @@ public class Goal : MonoBehaviour
         {
             Debug.Log("You won this level! Proceeding to the next level...");
             Destroy(GameObject.FindGameObjectWithTag("Ball"));
-			loadLevel.Trigger();
+            loadLevel.Trigger();
         }
-    }
 
-    void OnCollisionEnter(Collision col)
-    {
-        if (col.gameObject.tag == "Ball")
-        {
-            goalHit = true;
-        }
     }
 }
