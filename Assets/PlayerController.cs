@@ -26,12 +26,15 @@ public class PlayerController : MonoBehaviour
     public List<GameObject> objectPrefabList;
     public float sensitivity = 0.9f;
 
+    // bool to stop scrolling quickly
+    bool scroll = false;
+
     /*
         The following two boolean variables are for the Ball.cs script. If one of them is instantiated, 
         then the ball will add their respective ExitPoint as part of their reference. This will make 
         looking for the exitPoints less expensive as opposed to searching for it in every frame.  
      */
-    public bool instantiatedTeleportOne = false; 
+    public bool instantiatedTeleportOne = false;
     public bool instantiatedTeleportTwo = false;
 
     // Use this for initialization
@@ -70,7 +73,6 @@ public class PlayerController : MonoBehaviour
             currentObject = objectList.Count - 1;
         }
         objectList[currentObject].SetActive(true);
-
     }
 
     public void ScrollRightItem()
@@ -101,30 +103,36 @@ public class PlayerController : MonoBehaviour
         {
             instantiatedTeleportTwo = true;
         }
-        
+
     }
 
     private void FixedUpdate()
     {
         var rightTouch = itemsShow.GetState(SteamVR_Input_Sources.RightHand);
-        var leftHoriz = itemsScroll.GetAxis(SteamVR_Input_Sources.RightHand).x;
-        var rightHoriz = itemsScroll.GetAxis(SteamVR_Input_Sources.RightHand).x;
+        var horizJoystick = itemsScroll.GetAxis(SteamVR_Input_Sources.RightHand).x;
         var rightGrip = itemSpawn.GetStateDown(SteamVR_Input_Sources.RightHand);
 
         if (rightTouch)
         {
             ShowItem();
-            if (leftHoriz < -sensitivity || rightHoriz < -sensitivity)
+            if (horizJoystick < -sensitivity && !scroll)
             {
+                Debug.Log(horizJoystick);
                 ScrollLeftItem();
-                leftHoriz = 0.0f;
-                rightHoriz = 0.0f;
+                horizJoystick = 0.0f;
+                scroll = true;
             }
-            else if (leftHoriz > sensitivity || rightHoriz > sensitivity)
+            else if (horizJoystick > sensitivity && !scroll)
             {
+                Debug.Log(horizJoystick);
                 ScrollRightItem();
-                leftHoriz = 0.0f;
-                rightHoriz = 0.0f;
+                horizJoystick = 0.0f;
+                scroll = true;
+            }
+
+            else if (horizJoystick >= 0.0f && horizJoystick <= 0.1f)
+            {
+                scroll = false;
             }
 
             if (rightGrip)
