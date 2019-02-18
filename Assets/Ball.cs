@@ -111,6 +111,11 @@ public class Ball : MonoBehaviour
             col.gameObject.SetActive(false);
             starsCollected++;
         }
+
+        if (col.gameObject.tag == "AntiCheatZone")
+        {
+            Debug.Log("Inside " + col.gameObject.name);
+        }
     }
 
     void ResetBall()
@@ -128,7 +133,6 @@ public class Ball : MonoBehaviour
 
         GameController.GetComponent<GameController>().starsHit = false;
         GameController.GetComponent<GameController>().goalHit = false;
-
 
         if (lerpTime >= 1.0f)
         {

@@ -130,7 +130,7 @@ public class PlayerController : MonoBehaviour
                 scroll = true;
             }
 
-            else if (horizJoystick >= 0.0f && horizJoystick <= 0.1f)
+            else if (horizJoystick >= 0.0f && horizJoystick <= 0.0f)
             {
                 scroll = false;
             }
