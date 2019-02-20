@@ -111,11 +111,6 @@ public class Ball : MonoBehaviour
             col.gameObject.SetActive(false);
             starsCollected++;
         }
-
-        if (col.gameObject.tag == "AntiCheatZone")
-        {
-            Debug.Log("Inside " + col.gameObject.name);
-        }
     }
 
     void ResetBall()

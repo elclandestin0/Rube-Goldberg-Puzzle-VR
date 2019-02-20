@@ -64,7 +64,6 @@ public class PlayerController : MonoBehaviour
 
     public void ScrollLeftItem()
     {
-        Debug.Log("Moving menu pieces left");
         objectList[currentObject].SetActive(false);
         currentObject--;
 
@@ -77,7 +76,6 @@ public class PlayerController : MonoBehaviour
 
     public void ScrollRightItem()
     {
-        Debug.Log("Moving menu pieces right");
         objectList[currentObject].SetActive(false);
         currentObject++;
 
@@ -109,28 +107,26 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         var rightTouch = itemsShow.GetState(SteamVR_Input_Sources.RightHand);
-        var horizJoystick = itemsScroll.GetAxis(SteamVR_Input_Sources.RightHand).x;
+        var rightHorizJoystick = itemsScroll.GetAxis(SteamVR_Input_Sources.RightHand).x;
         var rightGrip = itemSpawn.GetStateDown(SteamVR_Input_Sources.RightHand);
 
         if (rightTouch)
         {
             ShowItem();
-            if (horizJoystick < -sensitivity && !scroll)
+            if (rightHorizJoystick < -sensitivity && !scroll)
             {
-                Debug.Log(horizJoystick);
                 ScrollLeftItem();
-                horizJoystick = 0.0f;
+                rightHorizJoystick = 0.0f;
                 scroll = true;
             }
-            else if (horizJoystick > sensitivity && !scroll)
+            else if (rightHorizJoystick > sensitivity && !scroll)
             {
-                Debug.Log(horizJoystick);
                 ScrollRightItem();
-                horizJoystick = 0.0f;
+                rightHorizJoystick = 0.0f;
                 scroll = true;
             }
 
-            else if (horizJoystick >= 0.0f && horizJoystick <= 0.0f)
+            else if (rightHorizJoystick >= 0.0f && rightHorizJoystick <= 0.0f)
             {
                 scroll = false;
             }
