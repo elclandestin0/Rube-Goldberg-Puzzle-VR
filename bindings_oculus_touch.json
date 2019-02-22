@@ -3,6 +3,10 @@
    "app_key" : "application.generated.unity.vrnd_c8a_projectassetpack.exe",
    "bindings" : {
       "/actions/buggy" : {
+         "chords" : [],
+         "haptics" : [],
+         "poses" : [],
+         "skeleton" : [],
          "sources" : [
             {
                "inputs" : {
@@ -239,11 +243,6 @@
                "path" : "/user/hand/right/input/grip"
             },
             {
-               "inputs" : {},
-               "mode" : "joystick",
-               "path" : "/user/hand/left/input/joystick"
-            },
-            {
                "inputs" : {
                   "position" : {
                      "output" : "/actions/default/in/itemsscroll"
@@ -254,39 +253,43 @@
             },
             {
                "inputs" : {
-                  "click" : {
-                     "output" : "/actions/default/in/itemspawn"
-                  }
-               },
-               "mode" : "button",
-               "path" : "/user/hand/left/input/grip"
-            },
-            {
-               "inputs" : {
-                  "click" : {
-                     "output" : "/actions/default/in/itemspawn"
-                  }
-               },
-               "mode" : "button",
-               "path" : "/user/hand/right/input/grip"
-            },
-            {
-               "inputs" : {},
-               "mode" : "joystick",
-               "path" : "/user/hand/left/input/joystick"
-            },
-            {
-               "inputs" : {
                   "touch" : {
                      "output" : "/actions/default/in/itemsshow"
                   }
                },
                "mode" : "joystick",
                "path" : "/user/hand/right/input/joystick"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/default/in/disableui"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/right/input/trigger"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/default/in/disableui"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/left/input/trigger"
+            },
+            {
+               "inputs" : {},
+               "mode" : "button",
+               "path" : "/user/hand/right/input/trigger"
             }
          ]
       },
       "/actions/platformer" : {
+         "chords" : [],
+         "haptics" : [],
+         "poses" : [],
+         "skeleton" : [],
          "sources" : [
             {
                "inputs" : {

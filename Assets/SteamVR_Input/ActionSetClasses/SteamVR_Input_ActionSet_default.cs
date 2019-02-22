@@ -113,6 +113,14 @@ namespace Valve.VR
             }
         }
         
+        public virtual SteamVR_Action_Boolean DisableUI
+        {
+            get
+            {
+                return SteamVR_Actions.default_DisableUI;
+            }
+        }
+        
         public virtual SteamVR_Action_Vibration Haptic
         {
             get

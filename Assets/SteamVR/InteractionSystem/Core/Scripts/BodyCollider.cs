@@ -20,6 +20,7 @@ namespace Valve.VR.InteractionSystem
         //-------------------------------------------------
         void Awake()
         {
+
             capsuleCollider = GetComponent<CapsuleCollider>();
         }
 

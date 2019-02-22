@@ -9,15 +9,19 @@ public class PlayerController : MonoBehaviour
     /* 
         The following three variables are actions that come with the new Steam VR plugin. 
         In the order of flow for spawning the objects, a user shows the items, scrolls 
-        through and picks one, and then finally spawn the item of their choice. 
+        through and picks one, and then finally spawn the item of their choice. The 
+        last variable is for disabling the UI.
      */
     public SteamVR_Action_Boolean itemsShow;
     public SteamVR_Action_Vector2 itemsScroll;
     public SteamVR_Action_Boolean itemSpawn;
+    public SteamVR_Action_Boolean disableUI; 
 
 
     // int to select objects
     public int currentObject = 0;
+
+    public GameObject AntiCheatUI;
 
     // Object List
     public List<GameObject> objectList;
@@ -111,12 +115,19 @@ public class PlayerController : MonoBehaviour
             instantiatedTrampoline = true;
         }
     }
+    
+    public void DeactivateUI()
+    {
+        AntiCheatUI.SetActive(false);
+    }
 
     private void FixedUpdate()
     {
         var rightTouch = itemsShow.GetState(SteamVR_Input_Sources.RightHand);
         var rightHorizJoystick = itemsScroll.GetAxis(SteamVR_Input_Sources.RightHand).x;
-        var rightGrip = itemSpawn.GetStateDown(SteamVR_Input_Sources.RightHand);
+        var rightGripOne = itemSpawn.GetStateDown(SteamVR_Input_Sources.RightHand);
+        var leftTrigger = disableUI.GetStateDown(SteamVR_Input_Sources.LeftHand);
+        var rightTrigger = disableUI.GetStateDown(SteamVR_Input_Sources.RightHand);
 
         if (rightTouch)
         {
@@ -139,7 +150,7 @@ public class PlayerController : MonoBehaviour
                 scroll = false;
             }
 
-            if (rightGrip)
+            if (rightGripOne)
             {
                 SpawnItem();
             }
@@ -147,6 +158,10 @@ public class PlayerController : MonoBehaviour
         else if (!rightTouch)
         {
             DeactivateItem();
+        }
+        if (leftTrigger || rightTrigger)
+        {
+            DeactivateUI();
         }
     }
 }

@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class AntiCheat : MonoBehaviour
 {
-	public GameObject Ball; 
+    public GameObject Ball;
+
+    public GameObject AntiCheatUI;
+
+    bool activateOnce = false;
 
     // Use this for initialization
     void Start()
     {
-		Ball = GameObject.FindGameObjectWithTag("Ball");
+        Ball = GameObject.FindGameObjectWithTag("Ball");
     }
 
     // Update is called once per frame
@@ -23,8 +27,8 @@ public class AntiCheat : MonoBehaviour
     {
         if (col.gameObject.name == "AntiCheatZone")
         {
-            Debug.Log("You are on the " + col.gameObject.name + "!!!") ;
-			Ball.GetComponent<Ball>().collideWithAssets = true;
+            Debug.Log("You are on the " + col.gameObject.name + "!!!");
+            Ball.GetComponent<Ball>().collideWithAssets = true;
         }
     }
 
@@ -32,8 +36,21 @@ public class AntiCheat : MonoBehaviour
     {
         if (col.gameObject.name == "AntiCheatZone")
         {
-            Debug.Log("You left the " + col.gameObject.name + "!!!");
-			Ball.GetComponent<Ball>().collideWithAssets = false;
+            var trans = 0.5f;
+            var ballColor = Ball.GetComponent<Renderer>().material.color;
+			ballColor.a = trans;
+            Ball.GetComponent<Ball>().collideWithAssets = false;
+            if (!activateOnce)
+            {
+                ActivateUI();
+            }
         }
+    }
+
+    void ActivateUI()
+    {
+        Debug.Log("Activated UI!");
+        AntiCheatUI.SetActive(true);
+        activateOnce = true;
     }
 }

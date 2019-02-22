@@ -53,6 +53,11 @@
       "type": "boolean"
     },
     {
+      "name": "/actions/default/in/DisableUI",
+      "type": "boolean",
+      "requirement": "optional"
+    },
+    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     },
