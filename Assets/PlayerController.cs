@@ -30,12 +30,16 @@ public class PlayerController : MonoBehaviour
     bool scroll = false;
 
     /*
-        The following two boolean variables are for the Ball.cs script. If one of them is instantiated, 
+        The following  boolean variables are for the Ball.cs script. If one of them is instantiated, 
         then the ball will add their respective ExitPoint as part of their reference. This will make 
         looking for the exitPoints less expensive as opposed to searching for it in every frame.  
      */
     public bool instantiatedTeleportOne = false;
     public bool instantiatedTeleportTwo = false;
+
+    // Same logic from above applies to the following boolean variable, but for teleportation
+    public bool instantiatedTrampoline = false; 
+
 
     // Use this for initialization
     void Start()
@@ -102,6 +106,10 @@ public class PlayerController : MonoBehaviour
             instantiatedTeleportTwo = true;
         }
 
+        if (objectPrefabList[currentObject].tag == "Trampoline")
+        {
+            instantiatedTrampoline = true;
+        }
     }
 
     private void FixedUpdate()

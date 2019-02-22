@@ -9,10 +9,11 @@ public class Ball : MonoBehaviour
     // List of star collectibles
     public List<GameObject> collectibles;
 
-
     // Exit points for teleport blocks
     public GameObject ExitPointOne;
     public GameObject ExitPointTwo;
+
+    public GameObject Trampoline;
 
     // GameObject reference to the GameController, in order to use the script's functions
     public GameObject GameController;
@@ -21,7 +22,9 @@ public class Ball : MonoBehaviour
     public GameObject PlayerController;
 
     // Force of ball when teleporting
-    public float force = 5.0f;
+    public float teleportForce;
+
+    public float bounceForce;
 
     // count of the number of stars the ball collided with
     static public int starsCollected;
@@ -29,12 +32,14 @@ public class Ball : MonoBehaviour
     // Empty GameObject for ball to reset to if it hits the floor 
     public GameObject Destination;
 
-    // Boolean to check if ball has collided with floor
+    // Boolean that activates if ball has collided with floor
     public bool activatedLerp = false;
 
-    // Boolean to find exitPoints
-    public bool findExitPoints = false;
+    // Boolean that activates if ball has bounced
+    public bool bounce = false;
 
+    // Boolean that activates when player is in the anti-cheat zone
+    public bool collideWithAssets = false;
 
     // Time to be added with deltaTime
     float time = 0.0f;
@@ -54,7 +59,12 @@ public class Ball : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (activatedLerp == true)
+        if (bounce)
+        {
+            Bounce();
+        }
+
+        if (activatedLerp)
         {
             ResetBall();
         }
@@ -73,6 +83,13 @@ public class Ball : MonoBehaviour
             PlayerController.GetComponent<PlayerController>().instantiatedTeleportTwo = false;
         }
 
+        if (PlayerController.GetComponent<PlayerController>().instantiatedTrampoline)
+        {
+            Debug.Log("Trampoline instantiated!");
+            Trampoline = GameObject.FindGameObjectWithTag("Trampoline");
+            PlayerController.GetComponent<PlayerController>().instantiatedTrampoline = false;
+        }
+
         if (starsCollected == collectibles.Count)
         {
             GameController.GetComponent<GameController>().starsHit = true;
@@ -83,22 +100,27 @@ public class Ball : MonoBehaviour
     void OnCollisionEnter(Collision col)
     {
 
-        if (col.gameObject.name == "Floor")
+        if (col.gameObject.tag == "Floor")
         {
             activatedLerp = true;
         }
 
-        if (col.gameObject.tag == "Teleport_Target_One")
+        if (col.gameObject.tag == "Trampoline" && collideWithAssets)
+        {
+            bounce = true;
+        }
+
+        if (col.gameObject.tag == "Teleport_Target_One" && collideWithAssets)
         {
             Teleport(ExitPointTwo);
         }
 
-        if (col.gameObject.tag == "Teleport_Target_Two")
+        if (col.gameObject.tag == "Teleport_Target_Two" && collideWithAssets)
         {
             Teleport(ExitPointOne);
         }
 
-        if (col.gameObject.tag == "Goal")
+        if (col.gameObject.tag == "Goal" && collideWithAssets)
         {
             GameController.GetComponent<GameController>().goalHit = true;
         }
@@ -106,7 +128,7 @@ public class Ball : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.tag == "Star")
+        if (col.gameObject.tag == "Star" && collideWithAssets)
         {
             col.gameObject.SetActive(false);
             starsCollected++;
@@ -148,7 +170,16 @@ public class Ball : MonoBehaviour
     {
         transform.position = ExitPoint.transform.position;
         float ballVelocity = gameObject.GetComponent<Rigidbody>().velocity.magnitude;
-        float finalVelocity = ballVelocity * force;
+        float finalVelocity = ballVelocity * teleportForce;
         gameObject.GetComponent<Rigidbody>().AddForce(ExitPoint.transform.forward * finalVelocity, ForceMode.Impulse);
+    }
+
+    void Bounce()
+    {
+        // Make trampoline bounce from vector3.forward
+        float ballVelocity = gameObject.GetComponent<Rigidbody>().velocity.magnitude;
+        float finalVelocity = ballVelocity * bounceForce;
+        gameObject.GetComponent<Rigidbody>().AddForce(Trampoline.transform.forward * finalVelocity, ForceMode.Impulse);
+        bounce = false;
     }
 }

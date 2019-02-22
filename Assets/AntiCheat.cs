@@ -23,7 +23,8 @@ public class AntiCheat : MonoBehaviour
     {
         if (col.gameObject.name == "AntiCheatZone")
         {
-            Debug.Log("You are on the " + col.gameObject.name + "!!!");
+            Debug.Log("You are on the " + col.gameObject.name + "!!!") ;
+			Ball.GetComponent<Ball>().collideWithAssets = true;
         }
     }
 
@@ -32,7 +33,7 @@ public class AntiCheat : MonoBehaviour
         if (col.gameObject.name == "AntiCheatZone")
         {
             Debug.Log("You left the " + col.gameObject.name + "!!!");
-			Ball.GetComponent<Collider>().enabled = false;
+			Ball.GetComponent<Ball>().collideWithAssets = false;
         }
     }
 }
