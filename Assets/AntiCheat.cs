@@ -36,9 +36,9 @@ public class AntiCheat : MonoBehaviour
     {
         if (col.gameObject.name == "AntiCheatZone")
         {
-            var trans = 0.5f;
-            var ballColor = Ball.GetComponent<Renderer>().material.color;
-			ballColor.a = trans;
+            // var trans = 0.5f;
+            // var ballColor = Ball.GetComponent<Material>().
+			// ballColor.a = trans;
             Ball.GetComponent<Ball>().collideWithAssets = false;
             if (!activateOnce)
             {
