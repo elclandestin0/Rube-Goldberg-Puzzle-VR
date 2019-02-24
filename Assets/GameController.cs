@@ -12,6 +12,8 @@ public class GameController : MonoBehaviour
     public bool goalHit = false;
     public bool starsHit = false;
 
+    public bool menuStart = false;
+
     // Use this for initialization
     void Start()
     {
@@ -26,6 +28,11 @@ public class GameController : MonoBehaviour
             Debug.Log("You won this level! Proceeding to the next level...");
             Destroy(GameObject.FindGameObjectWithTag("Ball"));
             loadLevel.Trigger();
+        }
+
+        else if(menuStart) {
+            
+
         }
 
     }
