@@ -329,7 +329,7 @@
    },
    "controller_type" : "oculus_touch",
    "description" : "",
-   "name" : "oculus_touch",
+   "name" : "goldberg_actions",
    "options" : {},
    "simulated_actions" : []
 }

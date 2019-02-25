@@ -18,7 +18,9 @@ public class GameController : MonoBehaviour
 
 
     // This boolean only activates in the main menu
-    public bool menuStart = false;
+    bool menuStart = false;
+
+    bool menuSelect = false;
 
     // This boolean only activates in the final level
     public bool lastLevel = false;
@@ -57,6 +59,7 @@ public class GameController : MonoBehaviour
         {
             startButton.GetComponent<AudioSource>().Play();
             loadLevel.Trigger();
+            menuStart = false;
         }
 
         else if (goalHit && starsHit && lastLevel)
