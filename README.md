@@ -13,18 +13,27 @@ This game is made with SteamVR and the binded buttons only work with the Rift. I
 ## How To Play
 ### Controls
 #### Left Oculus Controller
+
 **Left Thumbstick Click Action:** Teleport
+
 **Left Trigger Click Action:** Grab Goldberg object
+
 **Left Grip Click Action**: Grab Ball
  
 #### Right Oculus Controller
+
 **Right Thumbstick Click Action:** Teleport
+
 **Right Thumbstick Touch Action:** Show items
+
 **Right Thumbstick Position Action:** Cycle through items (while touching the Right Thumbstick)
+
 **Right Grip Click Action:** Spawn selected item (while touching the Right Thumbstick)
+
 **Right Grip Click Action:** Grab Ball
+
 **Right Trigger Action:** Grab Goldberg Objects
- 
+
 ## Goldberg Objects
 ### Trampoline
 Basic Goldberg object that helps bounce a ball to collect an out-of-bounds star or solve your challenges better!
