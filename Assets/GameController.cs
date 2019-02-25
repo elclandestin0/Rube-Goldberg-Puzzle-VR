@@ -9,6 +9,10 @@ public class GameController : MonoBehaviour
 
     public SteamVR_LoadLevel loadLevel;
 
+    public GameObject startButton;
+
+    public GameObject switchLevelSound;
+
     public bool goalHit = false;
     public bool starsHit = false;
 
@@ -38,11 +42,13 @@ public class GameController : MonoBehaviour
         {
             Debug.Log("You won this level! Proceeding to the next level...");
             Destroy(GameObject.FindGameObjectWithTag("Ball"));
+            switchLevelSound.GetComponent<AudioSource>().Play();
             loadLevel.Trigger();
         }
 
         else if (menuStart)
         {
+            startButton.GetComponent<AudioSource>().Play();
             loadLevel.Trigger();
         }
 
