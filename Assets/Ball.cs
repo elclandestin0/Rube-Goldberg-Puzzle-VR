@@ -14,6 +14,7 @@ public class Ball : MonoBehaviour
     public GameObject ExitPointTwo;
 
     public GameObject Trampoline;
+    public GameObject BallResetSound;
 
     // GameObject reference to the GameController, in order to use the script's functions
     public GameObject GameController;
@@ -32,11 +33,14 @@ public class Ball : MonoBehaviour
     // Empty GameObject for ball to reset to if it hits the floor 
     public GameObject Destination;
 
+    // Boolean that activates when ball hits the floor 
+    bool resetSound = false;
+
     // Boolean that activates if ball has collided with floor
-    public bool activatedLerp = false;
+    bool activatedLerp = false;
 
     // Boolean that activates if ball has bounced
-    public bool bounce = false;
+    bool bounce = false;
 
     // Boolean that activates when player is in the anti-cheat zone
     public bool collideWithAssets = false;
@@ -54,6 +58,7 @@ public class Ball : MonoBehaviour
         {
             collectibles.Add(collectible);
         }
+        BallResetSound = GameObject.Find("BallResetSound");
     }
 
     // Update is called once per frame
@@ -103,6 +108,10 @@ public class Ball : MonoBehaviour
         if (col.gameObject.tag == "Floor")
         {
             activatedLerp = true;
+            if (!resetSound)
+            {
+                BallResetSound.GetComponent<AudioSource>().Play();
+            }
         }
 
         if (col.gameObject.tag == "Trampoline" && collideWithAssets)
@@ -132,6 +141,7 @@ public class Ball : MonoBehaviour
         {
             col.gameObject.SetActive(false);
             starsCollected++;
+            gameObject.GetComponent<AudioSource>().Play();
         }
     }
 
@@ -151,9 +161,14 @@ public class Ball : MonoBehaviour
         GameController.GetComponent<GameController>().starsHit = false;
         GameController.GetComponent<GameController>().goalHit = false;
 
+        if (!resetSound) {
+            BallResetSound.GetComponent<AudioSource>().Play();
+            resetSound = true; 
+        }
         if (lerpTime >= 1.0f)
         {
             activatedLerp = false;
+            resetSound = false; 
             time = 0.0f;
             gameObject.GetComponent<Rigidbody>().isKinematic = false;
         }
@@ -180,6 +195,7 @@ public class Ball : MonoBehaviour
         float ballVelocity = gameObject.GetComponent<Rigidbody>().velocity.magnitude;
         float finalVelocity = ballVelocity * bounceForce;
         gameObject.GetComponent<Rigidbody>().AddForce(Trampoline.transform.forward * finalVelocity, ForceMode.Impulse);
+        Trampoline.GetComponent<AudioSource>().Play();
         bounce = false;
     }
 }

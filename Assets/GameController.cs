@@ -23,6 +23,8 @@ public class GameController : MonoBehaviour
     // This boolean only activates in the final level
     public bool lastLevel = false;
 
+    bool soundPlay = false;
+
 
 
     // Use this for initialization
@@ -42,7 +44,12 @@ public class GameController : MonoBehaviour
         {
             Debug.Log("You won this level! Proceeding to the next level...");
             Destroy(GameObject.FindGameObjectWithTag("Ball"));
-            switchLevelSound.GetComponent<AudioSource>().Play();
+            if (!soundPlay)
+            {
+                switchLevelSound.GetComponent<AudioSource>().Play();
+                soundPlay = true;
+            }
+
             loadLevel.Trigger();
         }
 

@@ -24,6 +24,10 @@ public class PlayerController : MonoBehaviour
 
     public GameObject AntiCheatUI;
 
+    // Game Objects that play sound from different actions
+    public GameObject SpawnObjectSound;
+    public GameObject CycleObjectSound;
+    public GameObject ShowObjectSound;
     // Object List
     public List<GameObject> objectList;
 
@@ -33,6 +37,8 @@ public class PlayerController : MonoBehaviour
 
     // bool to stop scrolling quickly
     bool scroll = false;
+
+    bool showSound = false;
 
     /*
         The following  boolean variables are for the Ball.cs script. If one of them is instantiated, 
@@ -65,6 +71,9 @@ public class PlayerController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        SpawnObjectSound = GameObject.Find("SpawnObjectSound");
+        ShowObjectSound = GameObject.Find("ShowObjectSound");
+        CycleObjectSound = GameObject.Find("CycleObjectSound");
         foreach (Transform child in transform)
         {
             objectList.Add(child.gameObject);
@@ -179,6 +188,12 @@ public class PlayerController : MonoBehaviour
         if (rightTouch)
         {
             ShowItem();
+            if (!showSound)
+            {
+
+                ShowObjectSound.GetComponent<AudioSource>().Play();
+                showSound = true;
+            }
             if (rightHorizJoystick < -sensitivity && !scroll)
             {
                 ScrollLeftItem();
@@ -200,11 +215,13 @@ public class PlayerController : MonoBehaviour
             if (rightGripOne)
             {
                 SpawnItem();
+                SpawnObjectSound.GetComponent<AudioSource>().Play();
             }
         }
         else if (!rightTouch)
         {
             DeactivateItem();
+            showSound = false;
         }
         if (leftTrigger || rightTrigger)
         {
