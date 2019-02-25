@@ -12,28 +12,50 @@ public class GameController : MonoBehaviour
     public bool goalHit = false;
     public bool starsHit = false;
 
+
+    // This boolean only activates in the main menu
     public bool menuStart = false;
+
+    // This boolean only activates in the final level
+    public bool lastLevel = false;
+
+
 
     // Use this for initialization
     void Start()
     {
+        if (loadLevel.levelName == "")
+        {
+            lastLevel = true;
+        }
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (goalHit && starsHit)
+        if (goalHit && starsHit && !lastLevel)
         {
             Debug.Log("You won this level! Proceeding to the next level...");
             Destroy(GameObject.FindGameObjectWithTag("Ball"));
             loadLevel.Trigger();
         }
 
-        else if(menuStart) {
-            
-
+        else if (menuStart)
+        {
+            loadLevel.Trigger();
         }
 
+        else if (goalHit && starsHit && lastLevel)
+        {
+            Destroy(GameObject.FindGameObjectWithTag("Ball"));
+            Debug.Log("You won the game!");
+        }
+
+    }
+
+    public void ActivateGame()
+    {
+        menuStart = true;
     }
 }
