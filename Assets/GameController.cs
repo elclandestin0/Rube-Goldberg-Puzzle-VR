@@ -8,10 +8,10 @@ public class GameController : MonoBehaviour
 {
 
     public SteamVR_LoadLevel loadLevel;
-
     public GameObject startButton;
-
-    public GameObject switchLevelSound;
+    GameObject switchLevelSound;
+    GameObject allUIs;
+    public GameObject welcome;
 
     public bool goalHit = false;
     public bool starsHit = false;
@@ -20,7 +20,7 @@ public class GameController : MonoBehaviour
     // This boolean only activates in the main menu
     bool menuStart = false;
 
-    bool menuSelect = false;
+    bool dismissUI = false;
 
     // This boolean only activates in the final level
     public bool lastLevel = false;
@@ -32,11 +32,15 @@ public class GameController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        if (loadLevel.levelName == "")
+        if (loadLevel.levelName == "MainMenu")
         {
             lastLevel = true;
         }
 
+        switchLevelSound = GameObject.Find("SwitchLevelSound");
+        allUIs = GameObject.Find("AllUIs");
+        welcome = GameObject.Find("Welcome");
+        welcome.SetActive(false);
     }
 
     // Update is called once per frame
@@ -51,7 +55,6 @@ public class GameController : MonoBehaviour
                 switchLevelSound.GetComponent<AudioSource>().Play();
                 soundPlay = true;
             }
-
             loadLevel.Trigger();
         }
 
@@ -65,13 +68,32 @@ public class GameController : MonoBehaviour
         else if (goalHit && starsHit && lastLevel)
         {
             Destroy(GameObject.FindGameObjectWithTag("Ball"));
-            Debug.Log("You won the game!");
+            if (!soundPlay)
+            {
+                switchLevelSound.GetComponent<AudioSource>().Play();
+                soundPlay = true;
+            }
+            welcome.SetActive(true);
         }
 
+        if (dismissUI)
+        {
+            allUIs.SetActive(false);
+        }
     }
 
     public void ActivateGame()
     {
         menuStart = true;
+    }
+
+    public void DisableUIs()
+    {
+        dismissUI = true;
+    }
+    public void RestartGame()
+    {
+        startButton.GetComponent<AudioSource>().Play();
+        loadLevel.Trigger();
     }
 }

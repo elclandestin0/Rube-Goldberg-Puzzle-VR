@@ -190,19 +190,20 @@ public class PlayerController : MonoBehaviour
             ShowItem();
             if (!showSound)
             {
-
                 ShowObjectSound.GetComponent<AudioSource>().Play();
                 showSound = true;
             }
             if (rightHorizJoystick < -sensitivity && !scroll)
             {
                 ScrollLeftItem();
+                ShowObjectSound.GetComponent<AudioSource>().Play();
                 rightHorizJoystick = 0.0f;
                 scroll = true;
             }
             else if (rightHorizJoystick > sensitivity && !scroll)
             {
                 ScrollRightItem();
+                ShowObjectSound.GetComponent<AudioSource>().Play();
                 rightHorizJoystick = 0.0f;
                 scroll = true;
             }
