@@ -85,12 +85,6 @@ public class PlayerController : MonoBehaviour
         teleportCountTwo.text = "Limit: " + teleportCounterTwo;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void ShowItem()
     {
         objectList[currentObject].SetActive(true);

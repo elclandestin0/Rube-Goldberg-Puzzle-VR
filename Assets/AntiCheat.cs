@@ -16,13 +16,6 @@ public class AntiCheat : MonoBehaviour
         Ball = GameObject.FindGameObjectWithTag("Ball");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-
     void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.name == "AntiCheatZone")
